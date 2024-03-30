@@ -5,7 +5,7 @@ public without sharing class PublicCalendarController {
         try {
             List<Booking> lstResults = new List<Booking>();
             List<TREX1__Booking__c> lstBks = [
-                SELECT Id, Name, TREX1__Function_Name__c, TREX1__Event_Name__c, TREX1__Start_Time__c, TREX1__End_Time__c 
+                SELECT Id, Name, TREX1__Function_Name__c, TREX1__Facility__r.Name, TREX1__Event_Name__c, TREX1__Start_Time__c, TREX1__End_Time__c
                   FROM TREX1__Booking__c 
                  WHERE TREX1__Function_Name__c = 'Public Field Hours' 
                    AND TREX1__Start_Time__c >= TODAY 
@@ -20,6 +20,7 @@ public without sharing class PublicCalendarController {
                 wrap.startTime = bk.TREX1__Start_Time__c;
                 wrap.endTime = bk.TREX1__End_Time__c;
                 wrap.functionName = bk.TREX1__Function_Name__c;
+                wrap.facilityName = bk.TREX1__Facility__r.Name;
                 lstResults.add(wrap);
             }
             return lstResults;
@@ -41,6 +42,8 @@ public without sharing class PublicCalendarController {
         public DateTime startTime {get; set;}
         @AuraEnabled
         public DateTime endTime {get; set;}
+        @AuraEnabled
+        public String facilityName {get; set;}
     }
 
 }
