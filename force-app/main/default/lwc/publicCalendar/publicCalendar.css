@@ -1,10 +1,24 @@
-.testthing {
-    background-color: red;
+/* .testthing {
+    background-color: green;
     height: 100px;
     width: 100px;
-}
+} */
 
 .public_field_hours-calendar {
-    height: 500px;
-    height: 500px;
+
+     height: 80vh;
+
 }
+
+/* .fc-event-container .fc-day-grid-event .fc-content {
+
+    white-space: wrap;
+}
+
+.fc-event-container .fc-event {
+    font-size: 20px;
+}
+
+.fc-day-grid-event .fc-content {
+    white-space: wrap;
+} */

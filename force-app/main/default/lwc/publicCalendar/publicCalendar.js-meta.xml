@@ -7,4 +7,15 @@
         <target>lightningCommunity__Default</target>
         <target>lightningCommunity__Page</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property
+                type="String"
+                name="functionName"
+                label="Function Name"
+                required="true"
+                description="The name of the function to return bookings for"
+            ></property>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

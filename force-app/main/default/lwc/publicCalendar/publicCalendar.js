@@ -1,10 +1,12 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import getPublicBookings from '@salesforce/apex/PublicCalendarController.getPublicBookings';
 
-import FullCalendar from '@salesforce/resourceUrl/fullCalendar';
+import FullCalendarJS from '@salesforce/resourceUrl/fullCalendarV4';
 
 export default class PublicCalendar extends LightningElement {
+    @api functionName;
+
     error;
     isLoading = false;
     cardTitle = 'I am a calendar';
@@ -12,6 +14,7 @@ export default class PublicCalendar extends LightningElement {
     bookings;
     events;
     wiredBookings = [];
+    calendar;
 
     //Sentinel so scripts only load once
     isRendered = false;
@@ -21,11 +24,19 @@ export default class PublicCalendar extends LightningElement {
             return;
         }
         console.log("onrender");
-        this.isRendered = true;
+        this.calendar =
+            this.isRendered = true;
 
         Promise.all([
-            loadScript(this, FullCalendar + '/fullcalendar-6.1.11/dist/index.global.min.js')
+
+            loadScript(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/main.js'),
+            loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/main.css'),
+
+            loadScript(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/daygrid/main.js'),
+            loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/daygrid/main.css'),
+
         ])
+            .then(() => {loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/overrides.css')})
             .then(() => {
                 console.log("loaded scripts")
                 this.initialiseCalendar();
@@ -38,66 +49,117 @@ export default class PublicCalendar extends LightningElement {
                     error: this.error
                 });
             });
-            /*
-            loadScript(this, FullCalendar + '/FullCalendar/jquery.min.js'),
-            loadScript(this, FullCalendar + '/FullCalendar/moment.min.js'),
-            loadScript(this, FullCalendar + '/FullCalendar/fullcalendar.min.js'),
-            loadStyle(this, FullCalendar + '/FullCalendar/fullcalendar.min.css'),
-            // loadStyle(this, FullCalendar + '/fullcalendar.print.min.css')
-            ])
-            .then(() => {
-                console.log("then")
-                this.initialiseCalendar();
-            })
-            .catch(error => {
-                console.error({
-                    message: 'Error occured on FullCalendar',
-                    error
-                });
-            });
-            */
+
     }
 
-    // Create event objects from bookings
+    // getDateRange() {
+    //     // let sortedDates = this.bookings.map(b => new Date(b.startTime)).sort((a, b) => a.date - b.date);
+    //     let sortedDates = this.events.sort((a, b) => a.start - b.start);
+    //     return {
+    //         start: sortedDates[0],
+    //         end: sortedDates[sortedDates.length-1]
+    //     }
+    // }
+    // // Create event objects from bookings
     initialiseCalendar() {
-        const ele = this.template.querySelector('div.public_field_hours-calendar');
-        console.log("yep");
-        $(ele).fullCalendar({
-            /*
-            header: {
+
+        var calendarEl = this.template.querySelector('div.public_field_hours-calendar');
+        this.calendar = new FullCalendar.Calendar(calendarEl, {
+
+            plugins: ['dayGrid'],
+    
+            height: 700,
+            headerToolbar: {
+    
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,basicWeek,basicDay'
+                right: 'dayGridMonth, dayGridWeek, dayGridDay'
             },
-            */
-            // defaultDate: '2019-01-12',
-            // defaultDate: new Date(), // default day is today
-            // navLinks: true, // can click day/week names to navigate views
-            // editable: true,
-            // eventLimit: true, // allow "more" link when too many events
-            // events: this.events
+
+    
+            // initialView: 'dayGridWeek',
+            defaultDate: new Date(),
+            // defaultView: 'dayGridWeek',
+            navLinks: true, // can click day/week names to navigate views
+            editable: false,
+            displayEventEnd: true,
+            //  eventLimit: true, // allow "more" link when too many events
+    
+            eventTimeFormat: {
+    
+                hour: 'numeric',
+                minute: '2-digit',
+                omitZeroMinute: false,
+                meridiem: 'short'
+    
+            },
+            events: this.events,
+    
+            eventColor: "#00A05F",
+    
+            // visibleRange: {
+            //     start: "2024-03-30",
+            //     end: "2024-04-10"
+            // },
+            // defaultView: 'dayGridMonth',
+            // duration: {weeks: 3}
+
+            defaultView: 'week',
+            views: {
+                week: {
+                    type: 'dayGrid',
+                    duration: { weeks: 2 }
+                }
+            }
         });
+
+        this.calendar.render();
+        // this.setStyles();
     }
 
     setEvents(bookings) {
         this.events = [];
         bookings.forEach(b => {
             this.events.push({
-                title: b.id,
-                start: b.startTime,
-                end: b.endTime
+                title: b.eventName,
+                start: new Date(b.startTime),
+                end: new Date(b.endTime)
             })
         });
+
+        this.events.sort((a, b) => a.start - b.start);
     }
 
-    @wire(getPublicBookings)
+    rerenderCalendar() {
+
+        if (this.calendar.destroy) this.calendar.destroy();
+        this.initialiseCalendar();
+        // console.log(this.getEventSources())
+        // this.calendar.getEventSources().remove();
+        // this.calendar.addEventSource(this.events);
+        // this.calendar.render();
+    }
+
+    // setStyles() {
+
+    //     this.template.querySelectorAll('.fc-day-grid-event .fc-content').forEach((e)=>{
+    //         e.style.whiteSpace = "wrap";
+    //         e.style.fontSize = "20px";
+    //     });
+        
+    // }
+
+    @wire(getPublicBookings, { functionName: '$functionName' })
     wiredResult(result) {
         this.isLoading = true;
         this.wiredBookings = result;
         if (result.data) {
             this.bookings = result.data;
-            console.table(this.bookings);
-            this.setEvents(this.bookings)
+            console.log(this.bookings);
+            // console.log("fire")
+            this.setEvents(this.bookings);
+            this.rerenderCalendar();
+
             this.error = undefined;
             this.isLoading = false;
         } else if (result.error) {

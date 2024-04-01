@@ -1,13 +1,13 @@
 public without sharing class PublicCalendarController {
     
     @AuraEnabled(cacheable=true)
-    public static List<Booking> getPublicBookings() {
+    public static List<Booking> getPublicBookings(String functionName) {
         try {
             List<Booking> lstResults = new List<Booking>();
             List<TREX1__Booking__c> lstBks = [
                 SELECT Id, Name, TREX1__Function_Name__c, TREX1__Facility__r.Name, TREX1__Event_Name__c, TREX1__Start_Time__c, TREX1__End_Time__c
                   FROM TREX1__Booking__c 
-                 WHERE TREX1__Function_Name__c = 'Public Field Hours' 
+                 WHERE TREX1__Function_Name__c = :functionName
                    AND TREX1__Start_Time__c >= TODAY 
                   WITH SYSTEM_MODE
                  ORDER BY TREX1__Start_Time__c ASC 
