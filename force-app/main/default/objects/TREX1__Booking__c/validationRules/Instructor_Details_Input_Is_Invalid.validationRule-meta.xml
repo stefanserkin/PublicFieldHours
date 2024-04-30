@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Instructor_Details_Input_Is_Invalid</fullName>
+    <active>false</active>
+    <description>If specifying a Number of Instructor Hours, Number of Instructors and Instructor Hourly Rate must be populated</description>
+    <errorConditionFormula>AND(
+ !ISBLANK( Number_of_Instructor_Hours__c ),
+ OR(
+  ISBLANK( Number_of_Instructors__c ),
+  ISBLANK( Instructor_Hourly_Rate__c )
+ )
+)</errorConditionFormula>
+    <errorMessage>If specifying a Number of Instructor Hours, Number of Instructors and Instructor Hourly Rate must be populated</errorMessage>
+</ValidationRule>

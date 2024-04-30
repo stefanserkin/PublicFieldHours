@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Role_ID__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Holds the ID of the role (of a staff member). This is populated when using the Set Role lookup via a trigger. This field is used in back-end processing.</description>
+    <externalId>true</externalId>
+    <inlineHelpText>Holds the ID of the role (of a staff member). This is populated when using the Set Role lookup via a trigger. This field is used in back-end processing.</inlineHelpText>
+    <label>Role ID</label>
+    <length>18</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

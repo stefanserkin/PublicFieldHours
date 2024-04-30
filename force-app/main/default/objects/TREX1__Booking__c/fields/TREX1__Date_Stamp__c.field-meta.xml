@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Date_Stamp__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The date that the booking starts in the local timezone in the yyyy-mm-dd format. This field is indexed to ensure that conflict queries are selective.</description>
+    <externalId>true</externalId>
+    <inlineHelpText>The date that the booking starts</inlineHelpText>
+    <label>Date_Stamp</label>
+    <length>10</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Role_Name__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Holds the role name, which is populated by a trigger when you use the Set Role lookup. Should be used in reporting on Booking by role, and displaying in the user interface, in lieu of the Set Role lookup.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Holds the role name, which is populated by a trigger when you use the Set Role lookup. Should be used in reporting on Booking by role, and displaying in the user interface, in lieu of the Set Role lookup.</inlineHelpText>
+    <label>Role Name</label>
+    <length>80</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

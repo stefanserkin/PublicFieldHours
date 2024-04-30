@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Update_Only_Me__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Don&apos;t apply changes to other booking in the series.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Don&apos;t apply changes to other booking in the series.</inlineHelpText>
+    <label>DO NOT USE</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

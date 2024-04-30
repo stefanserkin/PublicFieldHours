@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Sync_Booking_To_Series__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Indicates the rest of the booking in the series needs to be updated.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicates the rest of the booking in the series needs to be updated.</inlineHelpText>
+    <label>DO NOT USE</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

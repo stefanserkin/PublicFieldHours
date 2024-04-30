@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__External_Notes__c</fullName>
+    <deprecated>false</deprecated>
+    <description>A long text field for putting in any external notes required for this booking. Special maintenance tasks, instructions for an instructor. NOTE: this field is meant to be shown to external customers.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>A long text field for putting in any external notes required for this booking. Special maintenance tasks, instructions for an instructor. NOTE: this field is meant to be shown to external customers.</inlineHelpText>
+    <label>External Notes</label>
+    <length>3500</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

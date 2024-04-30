@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Ultimate_Parent__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Returns the Id of the ultimate parent in the booking hierarchy.</description>
+    <externalId>false</externalId>
+    <formula>If(IsBlank(TREX1__Parent_Booking__c),
+Id,
+If(IsBlank(TREX1__Parent_Booking__r.TREX1__Parent_Booking__c),
+TREX1__Parent_Booking__c,
+If(IsBlank(TREX1__Parent_Booking__r.TREX1__Parent_Booking__r.TREX1__Parent_Booking__c),
+TREX1__Parent_Booking__r.TREX1__Parent_Booking__c,
+If(IsBlank(TREX1__Parent_Booking__r.TREX1__Parent_Booking__r.TREX1__Parent_Booking__r.TREX1__Parent_Booking__c),
+TREX1__Parent_Booking__r.TREX1__Parent_Booking__r.TREX1__Parent_Booking__c,
+TREX1__Parent_Booking__r.TREX1__Parent_Booking__r.TREX1__Parent_Booking__r.TREX1__Parent_Booking__c
+))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Returns the Id of the ultimate parent in the booking hierarchy.</inlineHelpText>
+    <label>Ultimate Parent</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

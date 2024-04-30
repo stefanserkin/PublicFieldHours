@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__In_My_Primary_Location__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Returns True if this Booking has the same Location as the User&apos;s Primary Location, stored in the Division field. Users without a primary location will also return true, so they can view all records.</description>
+    <externalId>false</externalId>
+    <formula>IF(IsBlank($User.Division), TRUE,
+TREX1__Facility__r.TREX1__Location__r.Name=$User.Division)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Returns True if this Booking has the same Location as the User&apos;s Primary Location, stored in the Division field. Users without a primary location will also return true, so they can view all records.</inlineHelpText>
+    <label>In My Primary Location</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

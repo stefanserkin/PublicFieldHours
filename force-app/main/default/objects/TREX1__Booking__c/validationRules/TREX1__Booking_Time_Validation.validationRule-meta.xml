@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Booking_Time_Validation</fullName>
+    <active>false</active>
+    <description>DEPRECATED, formula fields does not handle timezones correctly. Validation is happening in a trigger.</description>
+    <errorConditionFormula>false</errorConditionFormula>
+    <errorMessage>Booking end time must be greater than the booking start time.</errorMessage>
+</ValidationRule>

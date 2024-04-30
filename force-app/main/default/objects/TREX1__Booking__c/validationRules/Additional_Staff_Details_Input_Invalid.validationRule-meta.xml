@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Additional_Staff_Details_Input_Invalid</fullName>
+    <active>false</active>
+    <description>If specifying a Number of Additional Staff Hours, Number of Instructors and Instructor Hourly Rate must be populated</description>
+    <errorConditionFormula>AND(
+ !ISBLANK( Number_of_Additional_Staff_Hours__c ),
+ OR(
+  ISBLANK( Number_of_Additional_Staff__c ),
+  ISBLANK( Additional_Staff_Hourly_Rate__c )
+ )
+)</errorConditionFormula>
+    <errorMessage>If specifying a Number of Instructor Hours, Number of Instructors and Instructor Hourly Rate must be populated</errorMessage>
+</ValidationRule>

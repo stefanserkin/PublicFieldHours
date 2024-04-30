@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__All</fullName>
+    <columns>CREATEDBY_USER</columns>
+    <columns>OBJECT_ID</columns>
+    <columns>TREX1__Event_Name__c</columns>
+    <columns>TREX1__Facility__c</columns>
+    <columns>Location_Name__c</columns>
+    <columns>TREX1__Start_Time__c</columns>
+    <columns>TREX1__End_Time__c</columns>
+    <columns>TREX1__Course_Option__c</columns>
+    <columns>TREX1__Conflict_Status__c</columns>
+    <columns>NAME</columns>
+    <columns>TREX1__Rental_Contract__c</columns>
+    <columns>TREX1__Booking_Series__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

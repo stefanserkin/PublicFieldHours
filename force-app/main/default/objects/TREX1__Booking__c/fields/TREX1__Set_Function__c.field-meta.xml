@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Set_Function__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>This field is used in automation to allow the end user to choose the function, but does not hold the function ID forever. Due to record skew issues, this field will be erased. Use the Function_ID field to store the ID long term, and the Function_Name field to group on the function name.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Use this field to search for and set a new function. This will overwrite the current function.</inlineHelpText>
+    <label>Set Function</label>
+    <referenceTo>TREX1__Function__c</referenceTo>
+    <relationshipLabel>Bookings</relationshipLabel>
+    <relationshipName>Bookings</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

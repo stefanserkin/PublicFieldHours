@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Wrong_date_stamp</fullName>
+    <active>true</active>
+    <description>validates that the date stamp on the record actually matches the start time of the record</description>
+    <errorConditionFormula>TEXT(DATEVALUE(TREX1__Start_Time__c)) != TREX1__Date_Stamp__c</errorConditionFormula>
+    <errorMessage>The datestamp and the start time don&apos;t match</errorMessage>
+</ValidationRule>

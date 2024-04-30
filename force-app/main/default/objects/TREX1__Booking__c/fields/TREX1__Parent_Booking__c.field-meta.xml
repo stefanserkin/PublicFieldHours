@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Parent_Booking__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <description>Status values and time changes cascade to the setup and teardown bookings. The conflict feature does not directly reference setup and teardown bookings (to improve efficiency), instead it targets the parent and factors in the setup and teardown time field values.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The booking that this setup or teardown time is reserved for.</inlineHelpText>
+    <label>Setup Parent</label>
+    <referenceTo>TREX1__Booking__c</referenceTo>
+    <relationshipLabel>Setup and Teardown</relationshipLabel>
+    <relationshipName>Child_Bookings</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

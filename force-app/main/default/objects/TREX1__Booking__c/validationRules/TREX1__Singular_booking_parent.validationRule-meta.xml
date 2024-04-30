@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Singular_booking_parent</fullName>
+    <active>true</active>
+    <description>Ensures that only one of the bookable things is booked by this booking. I.e. cannot book a facility and a staff member with the same booking.</description>
+    <errorConditionFormula>(
+!IsBlank(TREX1__Facility__c) &amp;&amp;
+!IsBlank(TREX1__Staff__c)
+)
+||
+(
+!IsBlank(TREX1__Facility__c) &amp;&amp;
+!IsBlank(TREX1__Equipment__c)
+)
+||
+(
+!IsBlank(TREX1__Staff__c) &amp;&amp;
+!IsBlank(TREX1__Equipment__c)
+)</errorConditionFormula>
+    <errorMessage>Only a facility, staff member or equipment can be booked in one booking record.</errorMessage>
+</ValidationRule>

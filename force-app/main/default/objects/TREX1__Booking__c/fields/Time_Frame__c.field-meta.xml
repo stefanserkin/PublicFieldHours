@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Time_Frame__c</fullName>
+    <description>Converts date/time fields to EDT (does not adjust for EST) and displays in a friendly format for reporting</description>
+    <externalId>false</externalId>
+    <formula>IF( VALUE( LEFT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) = 12 , &quot;12&quot; + RIGHT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; PM&quot;, 
+ 
+
+IF( VALUE( LEFT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) = 0 , &quot;12&quot; + RIGHT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; AM&quot;, 
+ 
+
+IF( VALUE( LEFT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) &gt; 12, 
+ 
+
+IF( VALUE( LEFT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) &lt; 22, 
+ 
+
+&quot;0&quot; + TEXT( VALUE( LEFT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) - 12 ) + RIGHT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; PM&quot;, 
+ 
+
+TEXT( VALUE( LEFT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) - 12 ) + RIGHT( MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; PM&quot; ), 
+ 
+
+MID( TEXT( TREX1__Start_Time_Block__c - 0.166666667 ), 12, 5) + &quot; AM&quot; ) ) ) + 
+
+&quot; - &quot; +
+
+
+IF( VALUE( LEFT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) = 12 , &quot;12&quot; + RIGHT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; PM&quot;, 
+ 
+
+IF( VALUE( LEFT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) = 0 , &quot;12&quot; + RIGHT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; AM&quot;, 
+ 
+
+IF( VALUE( LEFT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) &gt; 12, 
+ 
+
+IF( VALUE( LEFT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) &lt; 22, 
+ 
+
+&quot;0&quot; + TEXT( VALUE( LEFT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) - 12 ) + RIGHT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; PM&quot;, 
+ 
+
+TEXT( VALUE( LEFT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 2 ) ) - 12 ) + RIGHT( MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5), 3 ) + &quot; PM&quot; ), 
+ 
+
+MID( TEXT( TREX1__End_Time_Block__c - 0.166666667 ), 12, 5) + &quot; AM&quot; ) ) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Time Frame</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

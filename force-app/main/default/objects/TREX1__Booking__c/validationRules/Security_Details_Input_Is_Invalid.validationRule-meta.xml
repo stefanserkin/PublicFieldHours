@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Security_Details_Input_Is_Invalid</fullName>
+    <active>false</active>
+    <description>If specifying a number of security hours, Number of Security Guards and Security Hourly Rate must be populated</description>
+    <errorConditionFormula>AND(
+ !ISBLANK( Number_of_Security_Hours__c ),
+ OR(
+  ISBLANK( Number_of_Security_Guards__c ),
+  ISBLANK( Security_Hourly_Rate__c  )
+ )
+)</errorConditionFormula>
+    <errorMessage>If specifying a number of security hours, Number of Security Guards and Security Hourly Rate must be populated</errorMessage>
+</ValidationRule>

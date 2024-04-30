@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TREX1__Top_Level_Rental_Contract__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Developer field that is always equal to the first RC in a series (i.e. not an addendum), if booking was added under an addendum this will be equal to the addendum&apos;s parent.</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK(TREX1__Rental_Contract__r.TREX1__Parent_Rental_Contract__c), TREX1__Rental_Contract__c, TREX1__Rental_Contract__r.TREX1__Parent_Rental_Contract__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Top_Level_Rental_Contract</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
