@@ -9,23 +9,25 @@ export default class PublicCalendar extends LightningElement {
 
     error;
     isLoading = false;
-    cardTitle = 'I am a calendar';
 
     bookings;
     events;
     wiredBookings = [];
     calendar;
 
+    get calendarTitle() {
+        return `${this.functionName} Calendar`;
+    }
+
     //Sentinel so scripts only load once
     isRendered = false;
 
     renderedCallback() {
-        if (this.isRendered) {
-            return;
-        }
+        if (this.isRendered) return;
+
         console.log("onrender");
-        this.calendar =
-            this.isRendered = true;
+
+        this.isRendered = true;
 
         Promise.all([
 
@@ -52,15 +54,8 @@ export default class PublicCalendar extends LightningElement {
 
     }
 
-    // getDateRange() {
-    //     // let sortedDates = this.bookings.map(b => new Date(b.startTime)).sort((a, b) => a.date - b.date);
-    //     let sortedDates = this.events.sort((a, b) => a.start - b.start);
-    //     return {
-    //         start: sortedDates[0],
-    //         end: sortedDates[sortedDates.length-1]
-    //     }
-    // }
-    // // Create event objects from bookings
+
+    // Create event objects from bookings
     initialiseCalendar() {
 
         var calendarEl = this.template.querySelector('div.public_field_hours-calendar');
@@ -69,15 +64,21 @@ export default class PublicCalendar extends LightningElement {
             plugins: ['dayGrid'],
     
             height: 700,
-            headerToolbar: {
+            header: {
     
-                left: 'prev,next today',
+                // left: 'prev,next today',
+                left: '',
                 center: 'title',
-                right: 'dayGridMonth, dayGridWeek, dayGridDay'
+                right: ''
+                // right: 'dayGridMonth, dayGridWeek, dayGridDay'
+            },
+            
+            titleFormat: { 
+                year: 'numeric', month: 'long', day: 'numeric' 
             },
 
-    
-            // initialView: 'dayGridWeek',
+            columnHeaderFormat: { weekday: 'long' },
+
             defaultDate: new Date(),
             // defaultView: 'dayGridWeek',
             navLinks: true, // can click day/week names to navigate views
@@ -89,32 +90,32 @@ export default class PublicCalendar extends LightningElement {
     
                 hour: 'numeric',
                 minute: '2-digit',
-                omitZeroMinute: false,
+                omitZeroMinute: true,
                 meridiem: 'short'
     
             },
+
             events: this.events,
     
             eventColor: "#00A05F",
-    
-            // visibleRange: {
-            //     start: "2024-03-30",
-            //     end: "2024-04-10"
-            // },
-            // defaultView: 'dayGridMonth',
-            // duration: {weeks: 3}
 
             defaultView: 'week',
             views: {
                 week: {
                     type: 'dayGrid',
-                    duration: { weeks: 2 }
+                    duration: { weeks: 3 }
                 }
-            }
+            },
+
+            validRange: function(nowDate) {
+                return {
+                  start: nowDate,
+                  end: new Date(nowDate).setDate(nowDate.getDate() + 15)
+                };
+              }
         });
 
         this.calendar.render();
-        // this.setStyles();
     }
 
     setEvents(bookings) {
@@ -132,22 +133,12 @@ export default class PublicCalendar extends LightningElement {
 
     rerenderCalendar() {
 
-        if (this.calendar.destroy) this.calendar.destroy();
-        this.initialiseCalendar();
-        // console.log(this.getEventSources())
-        // this.calendar.getEventSources().remove();
-        // this.calendar.addEventSource(this.events);
-        // this.calendar.render();
+        if (this.calendar) {
+            this.calendar.destroy();
+            this.initialiseCalendar();
+        }
     }
 
-    // setStyles() {
-
-    //     this.template.querySelectorAll('.fc-day-grid-event .fc-content').forEach((e)=>{
-    //         e.style.whiteSpace = "wrap";
-    //         e.style.fontSize = "20px";
-    //     });
-        
-    // }
 
     @wire(getPublicBookings, { functionName: '$functionName' })
     wiredResult(result) {

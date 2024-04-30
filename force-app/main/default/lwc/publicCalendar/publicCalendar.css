@@ -10,6 +10,11 @@
 
 }
 
+.fc-head-container {
+    background-color: #003F2E;
+    color: white;
+}
+
 /* .fc-event-container .fc-day-grid-event .fc-content {
 
     white-space: wrap;

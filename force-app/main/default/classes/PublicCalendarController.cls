@@ -1,19 +1,17 @@
 public without sharing class PublicCalendarController {
     
+    /**
+     * Returns a list of Booking data wrappers for upcoming bookings
+     * related to the provided function name.
+     * 
+     * @param functionName The name of the function to get bookings for
+     * @returns {Booking[]} List of Booking objects
+     */
     @AuraEnabled(cacheable=true)
     public static List<Booking> getPublicBookings(String functionName) {
         try {
             List<Booking> lstResults = new List<Booking>();
-            List<TREX1__Booking__c> lstBks = [
-                SELECT Id, Name, TREX1__Function_Name__c, TREX1__Facility__r.Name, TREX1__Event_Name__c, TREX1__Start_Time__c, TREX1__End_Time__c
-                  FROM TREX1__Booking__c 
-                 WHERE TREX1__Function_Name__c = :functionName
-                   AND TREX1__Start_Time__c >= TODAY 
-                  WITH SYSTEM_MODE
-                 ORDER BY TREX1__Start_Time__c ASC 
-                 LIMIT 100
-            ];
-            for (TREX1__Booking__c bk : lstBks) {
+            for (TREX1__Booking__c bk : queryForBookings(functionName)) {
                 Booking wrap = new Booking();
                 wrap.id = bk.Id;
                 wrap.eventName = bk.TREX1__Event_Name__c;
@@ -29,11 +27,27 @@ public without sharing class PublicCalendarController {
         }
     }
 
+    /**
+     * Returns a list of upcoming Booking sobject records for a given function name.
+     * 
+     * @param functionName The name of the function to get bookings for
+     * @returns {TREX1__Booking__c[]}
+     */
+    private static List<TREX1__Booking__c> queryForBookings(String functionName) {
+        return [
+            SELECT Id, Name, TREX1__Function_Name__c, TREX1__Facility__r.Name, TREX1__Event_Name__c, TREX1__Start_Time__c, TREX1__End_Time__c
+              FROM TREX1__Booking__c 
+             WHERE TREX1__Function_Name__c = :functionName
+               AND TREX1__Start_Time__c >= TODAY 
+              WITH SYSTEM_MODE
+             ORDER BY TREX1__Start_Time__c ASC 
+             LIMIT 100
+        ];
+    }
+
     public class Booking {
         @AuraEnabled
         public String id {get; set;}
-        @AuraEnabled
-        public String name {get; set;}
         @AuraEnabled
         public String functionName {get; set;}
         @AuraEnabled
