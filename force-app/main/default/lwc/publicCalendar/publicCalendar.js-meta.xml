@@ -11,10 +11,25 @@
         <targetConfig targets="lightningCommunity__Default">
             <property
                 type="String"
+                name="calendarTitle"
+                label="Calendar Title"
+                default="Public Calendar"
+                required="true"
+                description="The main header for the calendar"
+            ></property>
+            <property
+                type="String"
                 name="functionName"
                 label="Function Name"
+                default="Public Hours"
                 required="true"
                 description="The name of the function to return bookings for"
+            ></property>
+            <property
+                type="String"
+                name="facilityNames"
+                label="Facility Names"
+                description="A comma-separated list of facility names to filter on. If blank, all facilities are included."
             ></property>
         </targetConfig>
     </targetConfigs>

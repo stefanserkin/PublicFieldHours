@@ -5,7 +5,9 @@ import getPublicBookings from '@salesforce/apex/PublicCalendarController.getPubl
 import FullCalendarJS from '@salesforce/resourceUrl/fullCalendarV4';
 
 export default class PublicCalendar extends LightningElement {
+    @api calendarTitle = 'Public Calendar';
     @api functionName;
+    @api facilityNames = '';
 
     error;
     isLoading = false;
@@ -15,32 +17,22 @@ export default class PublicCalendar extends LightningElement {
     wiredBookings = [];
     calendar;
 
-    get calendarTitle() {
-        return `${this.functionName} Calendar`;
-    }
-
     //Sentinel so scripts only load once
     isRendered = false;
 
     renderedCallback() {
         if (this.isRendered) return;
-
-        console.log("onrender");
-
+        console.log(':::: on render');
         this.isRendered = true;
 
         Promise.all([
-
             loadScript(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/main.js'),
             loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/main.css'),
-
             loadScript(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/daygrid/main.js'),
             loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/daygrid/main.css'),
-
         ])
             .then(() => {loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/overrides.css')})
             .then(() => {
-                console.log("loaded scripts")
                 this.initialiseCalendar();
                 this.isLoading = false;
             })
@@ -51,7 +43,6 @@ export default class PublicCalendar extends LightningElement {
                     error: this.error
                 });
             });
-
     }
 
 
@@ -63,7 +54,7 @@ export default class PublicCalendar extends LightningElement {
 
             plugins: ['dayGrid'],
     
-            height: 700,
+            // height: 700,
             header: {
     
                 // left: 'prev,next today',
@@ -140,14 +131,12 @@ export default class PublicCalendar extends LightningElement {
     }
 
 
-    @wire(getPublicBookings, { functionName: '$functionName' })
+    @wire(getPublicBookings, { functionName: '$functionName', facilityNames: '$facilityNames' })
     wiredResult(result) {
         this.isLoading = true;
         this.wiredBookings = result;
         if (result.data) {
             this.bookings = result.data;
-            console.log(this.bookings);
-            // console.log("fire")
             this.setEvents(this.bookings);
             this.rerenderCalendar();
 
@@ -160,63 +149,5 @@ export default class PublicCalendar extends LightningElement {
             this.isLoading = false;
         }
     }
-
-
-    // testE = [
-    //     {
-    //         title: 'All Day Event',
-    //         start: '2019-01-01'
-    //     },
-    //     {
-    //         title: 'Long Event',
-    //         start: '2019-01-07',
-    //         end: '2019-01-10'
-    //     },
-    //     {
-    //         id: 999,
-    //         title: 'Repeating Event',
-    //         start: '2019-01-09T16:00:00'
-    //     },
-    //     {
-    //         id: 999,
-    //         title: 'Repeating Event',
-    //         start: '2019-01-16T16:00:00'
-    //     },
-    //     {
-    //         title: 'Conference',
-    //         start: '2019-01-11',
-    //         end: '2019-01-13'
-    //     },
-    //     {
-    //         title: 'Meeting',
-    //         start: '2019-01-12T10:30:00',
-    //         end: '2019-01-12T12:30:00'
-    //     },
-    //     {
-    //         title: 'Lunch',
-    //         start: '2019-01-12T12:00:00'
-    //     },
-    //     {
-    //         title: 'Meeting',
-    //         start: '2019-01-12T14:30:00'
-    //     },
-    //     {
-    //         title: 'Happy Hour',
-    //         start: '2019-01-12T17:30:00'
-    //     },
-    //     {
-    //         title: 'Dinner',
-    //         start: '2019-01-12T20:00:00'
-    //     },
-    //     {
-    //         title: 'Birthday Party',
-    //         start: '2019-01-13T07:00:00'
-    //     },
-    //     {
-    //         title: 'Click for Google',
-    //         url: 'http://google.com/',
-    //         start: '2019-01-28'
-    //     }
-    // ];
 
 }

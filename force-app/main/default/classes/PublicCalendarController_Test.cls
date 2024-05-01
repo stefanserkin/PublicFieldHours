@@ -54,7 +54,7 @@ private class PublicCalendarController_Test {
 
         List<PublicCalendarController.Booking> lstEvents;
         Test.startTest();
-        lstEvents = PublicCalendarController.getPublicBookings(function.Name);
+        lstEvents = PublicCalendarController.getPublicBookings(function.Name, '');
         Test.stopTest();
 
         Assert.areEqual(
@@ -74,6 +74,49 @@ private class PublicCalendarController_Test {
             lstBookings.size(), 
             lstEvents.size(), 
             'Should have received a data wrapper object for each upcoming booking of the function type'
+        );
+    }
+
+    @IsTest
+    static void testGetPublicBookingsWithFacilityFilter() {
+        TREX1__Function__c function = [SELECT Name FROM TREX1__Function__c LIMIT 1];
+        TREX1__Facility__c facility = [SELECT Name FROM TREX1__Facility__c LIMIT 1];
+
+        List<PublicCalendarController.Booking> lstEvents;
+        Test.startTest();
+        lstEvents = PublicCalendarController.getPublicBookings(function.Name, facility.Name);
+        Test.stopTest();
+
+        Assert.areEqual(
+            function.Name, 
+            lstEvents[0].functionName, 
+            'Should not receive events with a different function name'
+        );
+
+        List<TREX1__Booking__c> lstBookings = [
+            SELECT Id, TREX1__Facility__r.Name, TREX1__Function_Name__c
+              FROM TREX1__Booking__c 
+             WHERE TREX1__Function_Name__c = :function.Name
+               AND TREX1__Facility__r.Name = :facility.Name
+               AND TREX1__Start_Time__c >= TODAY
+        ];
+
+        Assert.areEqual(
+            lstBookings.size(), 
+            lstEvents.size(), 
+            'Should have received a data wrapper object for each upcoming booking of the function type and facility'
+        );
+
+        Assert.areEqual(
+            function.Name, 
+            lstBookings[0].TREX1__Function_Name__c, 
+            'Should have received bookings only for the specified function'
+        );
+
+        Assert.areEqual(
+            facility.Name, 
+            lstBookings[0].TREX1__Facility__r.Name, 
+            'Should have received bookings only for the specified facility'
         );
     }
     
