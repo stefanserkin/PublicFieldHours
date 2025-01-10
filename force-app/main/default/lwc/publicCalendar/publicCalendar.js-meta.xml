@@ -31,6 +31,18 @@
                 label="Facility Names"
                 description="A comma-separated list of facility names to filter on. If blank, all facilities are included."
             ></property>
+            <property
+                type="Boolean"
+                name="showFacilityName"
+                label="Show Facility Name"
+                description="If checked, the facility name is displayed in each event tile"
+            ></property>
+            <property
+                type="Boolean"
+                name="showEventName"
+                label="Show Event Name"
+                description="If checked, the booking event name is displayed in each event tile"
+            ></property>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

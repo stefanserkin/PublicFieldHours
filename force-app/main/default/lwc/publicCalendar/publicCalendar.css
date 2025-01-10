@@ -1,4 +1,5 @@
-.fc-head-container {
-    background-color: #003F2E;
-    color: white;
+.calendar-header {
+    font-size: xx-large;
+    font-weight: bold;
+    text-align: center;
 }

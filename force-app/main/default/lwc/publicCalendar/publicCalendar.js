@@ -8,6 +8,8 @@ export default class PublicCalendar extends LightningElement {
     @api calendarTitle = 'Public Calendar';
     @api functionName;
     @api facilityNames = '';
+    @api showFacilityName = false;
+    @api showEventName = false;
 
     error;
     isLoading = false;
@@ -22,7 +24,6 @@ export default class PublicCalendar extends LightningElement {
 
     renderedCallback() {
         if (this.isRendered) return;
-        console.log(':::: on render');
         this.isRendered = true;
 
         Promise.all([
@@ -31,7 +32,9 @@ export default class PublicCalendar extends LightningElement {
             loadScript(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/daygrid/main.js'),
             loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/daygrid/main.css'),
         ])
-            .then(() => {loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/overrides.css')})
+            .then(() => {
+                loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/overrides.css')
+            })
             .then(() => {
                 this.initialiseCalendar();
                 this.isLoading = false;
@@ -45,10 +48,26 @@ export default class PublicCalendar extends LightningElement {
             });
     }
 
+    @wire(getPublicBookings, { functionName: '$functionName', facilityNames: '$facilityNames' })
+    wiredResult(result) {
+        this.isLoading = true;
+        this.wiredBookings = result;
+        if (result.data) {
+            this.bookings = result.data;
+            this.setEvents(this.bookings);
+            this.rerenderCalendar();
 
-    // Create event objects from bookings
+            this.error = undefined;
+            this.isLoading = false;
+        } else if (result.error) {
+            console.error(result.error);
+            this.error = result.error;
+            this.bookings = undefined;
+            this.isLoading = false;
+        }
+    }
+
     initialiseCalendar() {
-
         var calendarEl = this.template.querySelector('div.public_field_hours-calendar');
         this.calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -56,7 +75,6 @@ export default class PublicCalendar extends LightningElement {
     
             // height: 700,
             header: {
-    
                 // left: 'prev,next today',
                 left: '',
                 center: 'title',
@@ -78,17 +96,16 @@ export default class PublicCalendar extends LightningElement {
             //  eventLimit: true, // allow "more" link when too many events
     
             eventTimeFormat: {
-    
                 hour: 'numeric',
                 minute: '2-digit',
                 omitZeroMinute: true,
                 meridiem: 'short'
-    
             },
 
             events: this.events,
     
-            eventColor: "#00A05F",
+            eventColor: "#00a05f",
+            eventTextColor: "#fff",
 
             defaultView: 'week',
             views: {
@@ -103,7 +120,7 @@ export default class PublicCalendar extends LightningElement {
                   start: nowDate,
                   end: new Date(nowDate).setDate(nowDate.getDate() + 15)
                 };
-              }
+            }
         });
 
         this.calendar.render();
@@ -113,7 +130,7 @@ export default class PublicCalendar extends LightningElement {
         this.events = [];
         bookings.forEach(b => {
             this.events.push({
-                title: b.eventName,
+                title: this.getEventTitle(b),
                 start: new Date(b.startTime),
                 end: new Date(b.endTime)
             })
@@ -122,31 +139,22 @@ export default class PublicCalendar extends LightningElement {
         this.events.sort((a, b) => a.start - b.start);
     }
 
-    rerenderCalendar() {
+    getEventTitle(booking) {
+        let title = '';
+        if (this.showEventName && this.showFacilityName) {
+            title += booking.eventName + ' (' + booking.facilityName + ')';
+        } else if (this.showFacilityName) {
+            title += booking.facilityName;
+        } else if (this.showEventName) {
+            title += booking.eventName;
+        }
+        return title;
+    };
 
+    rerenderCalendar() {
         if (this.calendar) {
             this.calendar.destroy();
             this.initialiseCalendar();
-        }
-    }
-
-
-    @wire(getPublicBookings, { functionName: '$functionName', facilityNames: '$facilityNames' })
-    wiredResult(result) {
-        this.isLoading = true;
-        this.wiredBookings = result;
-        if (result.data) {
-            this.bookings = result.data;
-            this.setEvents(this.bookings);
-            this.rerenderCalendar();
-
-            this.error = undefined;
-            this.isLoading = false;
-        } else if (result.error) {
-            console.error(result.error);
-            this.error = result.error;
-            this.bookings = undefined;
-            this.isLoading = false;
         }
     }
 
