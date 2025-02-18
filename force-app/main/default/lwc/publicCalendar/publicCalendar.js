@@ -111,20 +111,75 @@ export default class PublicCalendar extends LightningElement {
             views: {
                 week: {
                     type: 'dayGrid',
-                    duration: { weeks: 3 }
+                    duration: { weeks: 4 }
                 }
             },
 
             validRange: function(nowDate) {
                 return {
                   start: nowDate,
-                  end: new Date(nowDate).setDate(nowDate.getDate() + 15)
+                  end: new Date(nowDate).setDate(nowDate.getDate() + 30)
                 };
             }
         });
 
         this.calendar.render();
     }
+
+    /*
+    initialiseCalendar() {
+        var calendarEl = this.template.querySelector('div.public_field_hours-calendar');
+        this.calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['dayGrid'],
+
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth'
+            },
+
+            titleFormat: { 
+                year: 'numeric', month: 'long'
+            },
+
+            columnHeaderFormat: { weekday: 'long' },
+
+            defaultDate: new Date(),
+            defaultView: 'dayGridMonth',
+            navLinks: true,
+            editable: false,
+            displayEventEnd: true,
+
+            eventTimeFormat: {
+                hour: 'numeric',
+                minute: '2-digit',
+                omitZeroMinute: true,
+                meridiem: 'short'
+            },
+
+            events: this.events,
+
+            eventColor: "#00a05f",
+            eventTextColor: "#fff",
+
+            views: {
+                month: {
+                    type: 'dayGridMonth',
+                }
+            },
+
+            validRange: function(nowDate) {
+                return {
+                    start: new Date(nowDate.getFullYear(), nowDate.getMonth(), 1),
+                    end: new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 0)
+                };
+            }
+        });
+
+        this.calendar.render();
+    }
+        */
+
 
     setEvents(bookings) {
         this.events = [];
