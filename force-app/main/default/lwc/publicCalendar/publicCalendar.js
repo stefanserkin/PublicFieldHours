@@ -8,6 +8,7 @@ export default class PublicCalendar extends LightningElement {
     @api calendarTitle = 'Public Calendar';
     @api functionName;
     @api facilityNames = '';
+    @api daysToShow = 14;
     @api showFacilityName = false;
     @api showEventName = false;
 
@@ -19,7 +20,7 @@ export default class PublicCalendar extends LightningElement {
     wiredBookings = [];
     calendar;
 
-    //Sentinel so scripts only load once
+    // Sentinel so scripts only load once
     isRendered = false;
 
     renderedCallback() {
@@ -36,7 +37,7 @@ export default class PublicCalendar extends LightningElement {
                 loadStyle(this, FullCalendarJS + '/fullcalendar-4.4.3/packages/core/overrides.css')
             })
             .then(() => {
-                this.initialiseCalendar();
+                this.initializeCalendar();
                 this.isLoading = false;
             })
             .catch(error => {
@@ -67,8 +68,9 @@ export default class PublicCalendar extends LightningElement {
         }
     }
 
-    initialiseCalendar() {
+    initializeCalendar() {
         var calendarEl = this.template.querySelector('div.public_field_hours-calendar');
+        const numDays = this.daysToShow;
         this.calendar = new FullCalendar.Calendar(calendarEl, {
 
             plugins: ['dayGrid'],
@@ -111,75 +113,20 @@ export default class PublicCalendar extends LightningElement {
             views: {
                 week: {
                     type: 'dayGrid',
-                    duration: { weeks: 4 }
+                    duration: { weeks: Math.floor(numDays / 7) + 1 }
                 }
             },
 
             validRange: function(nowDate) {
                 return {
                   start: nowDate,
-                  end: new Date(nowDate).setDate(nowDate.getDate() + 30)
+                  end: new Date(nowDate).setDate(nowDate.getDate() + numDays)
                 };
             }
         });
 
         this.calendar.render();
     }
-
-    /*
-    initialiseCalendar() {
-        var calendarEl = this.template.querySelector('div.public_field_hours-calendar');
-        this.calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['dayGrid'],
-
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth'
-            },
-
-            titleFormat: { 
-                year: 'numeric', month: 'long'
-            },
-
-            columnHeaderFormat: { weekday: 'long' },
-
-            defaultDate: new Date(),
-            defaultView: 'dayGridMonth',
-            navLinks: true,
-            editable: false,
-            displayEventEnd: true,
-
-            eventTimeFormat: {
-                hour: 'numeric',
-                minute: '2-digit',
-                omitZeroMinute: true,
-                meridiem: 'short'
-            },
-
-            events: this.events,
-
-            eventColor: "#00a05f",
-            eventTextColor: "#fff",
-
-            views: {
-                month: {
-                    type: 'dayGridMonth',
-                }
-            },
-
-            validRange: function(nowDate) {
-                return {
-                    start: new Date(nowDate.getFullYear(), nowDate.getMonth(), 1),
-                    end: new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 0)
-                };
-            }
-        });
-
-        this.calendar.render();
-    }
-        */
-
 
     setEvents(bookings) {
         this.events = [];
@@ -209,7 +156,7 @@ export default class PublicCalendar extends LightningElement {
     rerenderCalendar() {
         if (this.calendar) {
             this.calendar.destroy();
-            this.initialiseCalendar();
+            this.initializeCalendar();
         }
     }
 

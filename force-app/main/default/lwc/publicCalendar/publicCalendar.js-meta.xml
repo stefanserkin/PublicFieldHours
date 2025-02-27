@@ -32,6 +32,12 @@
                 description="A comma-separated list of facility names to filter on. If blank, all facilities are included."
             ></property>
             <property
+                type="Integer"
+                name="daysToShow"
+                label="Number of Days to Show"
+                description="The number of days of bookings to show in the calendar"
+            ></property>
+            <property
                 type="Boolean"
                 name="showFacilityName"
                 label="Show Facility Name"
