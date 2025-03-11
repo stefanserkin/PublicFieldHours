@@ -3,3 +3,32 @@
     font-weight: bold;
     text-align: center;
 }
+.public_field_hours-calendar {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.fc-day-grid {
+    min-width: 600px; /* Prevent collapsing on small screens */
+}
+
+.fc-day-grid-container {
+    overflow-x: auto; /* Ensure week view is scrollable */
+}
+
+@media screen and (max-width: 768px) {
+    .fc-day-grid {
+        font-size: 12px; /* Reduce font size for better fit */
+    }
+
+    .fc-header-toolbar {
+        font-size: 14px; /* Adjust toolbar size */
+    }
+    
+}
+@media only screen and (max-width: 600px) {
+    .fc-event-container .fc-event,.fc-event-container .fc-event .fc-time,.fc-event-container .fc-event .fc-title {
+        font-size: 6px!important;
+    }
+}
