@@ -2,6 +2,13 @@
     <div>
         <h1 class="calendar-header">{calendarTitle}</h1>
     </div>
+
+    <template lwc:if={isLoading}>
+        <div class="slds-is-relative slds-p-around_medium">
+            <lightning-spinner alternative-text="Loading calendar..." size="medium"></lightning-spinner>
+        </div>
+    </template>
+
     <div>
         <div id="calendar" class="public_field_hours-calendar"></div>
     </div>
